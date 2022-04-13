@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="index">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="9" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="737" height="482"/>
+    </constraints>
+    <properties>
+      <font name="Consolas" size="14"/>
+      <inheritsPopupMenu value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="eb2aa" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Faculty Id"/>
+        </properties>
+      </component>
+      <component id="85781" class="javax.swing.JTextField" binding="facaultyId">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="22ece" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Vechile Number"/>
+        </properties>
+      </component>
+      <component id="dcaac" class="javax.swing.JTextField" binding="vechileNo">
+        <constraints>
+          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="3026" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+      <component id="5983a" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+        <constraints>
+          <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="7616" class="javax.swing.JButton" binding="submitBtn">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Enter"/>
+        </properties>
+      </component>
+      <component id="5a522" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="History Sorting"/>
+        </properties>
+      </component>
+      <component id="1e59" class="javax.swing.JTextField" binding="facaultyName">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+          <toolTipText value="Faculty Name"/>
+          <verifyInputWhenFocusTarget value="true"/>
+        </properties>
+      </component>
+      <component id="77f15" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+        <constraints>
+          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="e9c3c" class="javax.swing.JButton" binding="showAllButton" default-binding="true">
+        <constraints>
+          <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Show all"/>
+        </properties>
+      </component>
+      <component id="7d70d" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Entery Record"/>
+        </properties>
+      </component>
+      <component id="25d9f" class="javax.swing.JTable" binding="entryRecord">
+        <constraints>
+          <grid row="8" column="1" row-span="1" col-span="4" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="de9f4" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="28" style="1"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Gate Entry"/>
+        </properties>
+      </component>
+      <hspacer id="a6d57">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="dd1e6">
+        <constraints>
+          <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <component id="1619f" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Faculty Name"/>
+        </properties>
+      </component>
+      <component id="8cea2" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" size="14"/>
+          <inheritsPopupMenu value="true"/>
+          <text value="Faculty Id"/>
+        </properties>
+      </component>
+      <hspacer id="bf5a3">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+    </children>
+  </grid>
+</form>
