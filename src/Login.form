@@ -32,7 +32,10 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value=""/>
+          <toolTipText value="Enter Username"/>
+        </properties>
       </component>
       <component id="5db99" class="javax.swing.JLabel">
         <constraints>
@@ -49,7 +52,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <toolTipText value="Enter Password"/>
+        </properties>
       </component>
       <component id="deb2d" class="javax.swing.JButton" binding="loginBtn">
         <constraints>
@@ -58,6 +63,7 @@
         <properties>
           <font name="Consolas" size="20" style="1"/>
           <text value="Login"/>
+          <toolTipText value="Login"/>
         </properties>
       </component>
       <component id="488ca" class="javax.swing.JLabel" binding="error">

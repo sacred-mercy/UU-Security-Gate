@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 public class Login extends JDialog {
 
@@ -15,36 +17,48 @@ public class Login extends JDialog {
         super(parent);
         setTitle("Login");
         setContentPane(loginMain);
-        setMinimumSize(new Dimension(900, 648));
+        setMinimumSize(new Dimension(1400, 800));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
 
         loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
-                    Connection con= DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/mini_project","root","");
+                    final String dbURL = "jdbc:mysql://localhost:3306/uu_security_system";
+                    final String dbUsername = "root";
+                    final String dbPassword = "";
+                    Connection con= DriverManager.getConnection(dbURL, dbUsername,dbPassword);
                     String username = tfusername.getText();
                     String password = String.valueOf(tfpassword.getPassword());
                     Statement stmt = con.createStatement();
-                    String sql = "SELECT * FROM admin WHERE email='"+username+"' AND password='"+password+"'";
+                    String sql = "SELECT * FROM admin WHERE username='"+username+"' AND password='"+password+"'";
                     ResultSet resultSet = stmt.executeQuery(sql);
                     if(resultSet.next()){
                         dispose(); //close login page if logged in
-                        index indexPage = new index(null);
-                        indexPage.show();
+                        Index index = new Index(null);
+                        index.getAccessibleContext();
                     }else {
-                        JOptionPane.showMessageDialog(null, "username and password are invalid");
-//                        username.setText();
-//                        password.setText();
+                        JOptionPane.showMessageDialog(Login.this,
+                                "username and password are invalid",
+                                "Try again",
+                                JOptionPane.ERROR_MESSAGE);
+                        tfusername.setText("");
+                        tfpassword.setText("");
                         con.close();
                     }
                 }catch (Exception error){
                     System.out.println(error.getMessage());
                 }
+            }
+        });
+        setVisible(true);
+
+        loginBtn.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
             }
         });
     }
@@ -60,18 +74,3 @@ class Main{
 
     }
 }
-
-//class MysqlCon{
-//    public static void main(String[] args){
-//        try{
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection con= DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/mini_project","root","");
-//            Statement stmt=con.createStatement();
-//            ResultSet rs=stmt.executeQuery("SELECT * FROM admin");
-//            while(rs.next())
-//                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
-//            con.close();
-//        }catch(Exception e){ System.out.println(e);}
-//    }
-//}
