@@ -11,7 +11,6 @@ public class TabbedFrame extends JDialog {
     private JPanel indexPanel;
     private JTabbedPane tabbedPane1;
     private JTextField employeeIdInsert;
-
     private JTextField employeeVehicleInsert;
     private JButton insertEmployeeDataBtn;
     private JTextField employeeDataSearch;
@@ -22,6 +21,14 @@ public class TabbedFrame extends JDialog {
     private JPanel EmployeeDataInsert;
     private JPanel EmployeeDataSearch;
     private JPanel EmployeeHistoryRecordSearch;
+    private JTextField visitorNameInsertTextField;
+    private JTextField visitorVehicleInsertTextField;
+    private JTextArea visitorReasonInsertTextarea;
+    private JTextField visitorMobileInsertTextField;
+    private JTextField visitorSearchNameTextField;
+    private JTable visitorHistoryRecordTable;
+    private JButton InsertVisitorDataBtn;
+    private JTable table1;
 
     public TabbedFrame(JFrame parent) {
         super(parent);
@@ -30,8 +37,8 @@ public class TabbedFrame extends JDialog {
         setMinimumSize(new Dimension(1400, 800));
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        showUserDataTableData();
-        showUserHistoryRecordTableData();
+        showEmployeeDataTableData();
+        showEmployeeHistoryRecordTableData();
 
         insertEmployeeDataBtn.addActionListener(e -> {
             try {
@@ -73,13 +80,40 @@ public class TabbedFrame extends JDialog {
             }
 
         });
+        InsertVisitorDataBtn.addActionListener(e -> {
+            try {
+                Database db = new Database();
+                Connection con = db.con;
+                String name = visitorNameInsertTextField.getText();
+                String vehicleNo = visitorVehicleInsertTextField.getText();
+                String mobileNo = visitorMobileInsertTextField.getText();
+                String reason = visitorReasonInsertTextarea.getText();
+                DateTimeFormatter dateObject = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter timeObject = DateTimeFormatter.ofPattern("HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                String date = dateObject.format(now);
+                String time = timeObject.format(now);
+                String query = "INSERT INTO visitor_records VALUES(?,?,?,?,?,?)" ;
+                String[] visitorInformation = new String[6];
+                visitorInformation[0] = name;
+                visitorInformation[1] = mobileNo;
+                visitorInformation[2] = vehicleNo;
+                visitorInformation[3] = reason;
+                visitorInformation[4] = time;
+                visitorInformation[5] = date;
+                db.dataInsert(query,6,visitorInformation);
+                con.close();
+            }catch (Exception error){
+                System.out.println(error.getMessage());
+            }
+        });
         setVisible(true);
     }
 
-    private void showUserHistoryRecordTableData() {
+    private void showEmployeeHistoryRecordTableData() {
 
     }
 
-    private void showUserDataTableData() {
+    private void showEmployeeDataTableData() {
     }
 }

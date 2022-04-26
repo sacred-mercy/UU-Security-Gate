@@ -1,6 +1,8 @@
 import com.mysql.jdbc.Connection;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -42,10 +44,13 @@ public class Login extends JDialog {
                     con.close();
                 }
             } catch (Exception error) {
+                JOptionPane.showMessageDialog(Login.this,
+                        "No Database Connectivity",
+                        "Try again",
+                        JOptionPane.ERROR_MESSAGE);
                 System.out.println(error.getMessage());
             }
         });
         setVisible(true);
     }
 }
-
