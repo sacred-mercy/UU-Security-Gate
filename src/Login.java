@@ -25,8 +25,23 @@ public class Login extends JDialog {
             try {
                 Database db = new Database();
                 Connection con = db.con;
-                String username = textFieldUsername.getText();
-                String password = String.valueOf(textFieldPassword.getPassword());
+                Validation validation = new Validation();
+                String username = validation.validateUsername(textFieldUsername.getText());
+                if (username.isEmpty()){
+                    JOptionPane.showMessageDialog(Login.this,
+                            "Please Enter an username",
+                            "Username Empty",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                String password = validation.validatePassword(String.valueOf(textFieldPassword.getPassword()));
+                if (password.isEmpty()){
+                    JOptionPane.showMessageDialog(Login.this,
+                            "Please Enter a password",
+                            "Password Empty",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 Statement stmt = con.createStatement();
                 String query = "SELECT * FROM admin WHERE username='" + username + "' AND password='" + password + "'";
                 ResultSet resultSet = stmt.executeQuery(query);
