@@ -3,6 +3,8 @@ import com.mysql.jdbc.Connection;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
@@ -24,7 +26,6 @@ public class TabbedFrame extends JDialog {
     private JPanel EmpHistoryRecordSearch;
     private JTextField visitorNameInsertTextField;
     private JTextField visitorVehicleInsertTextField;
-    private JTextArea visitorReasonInsertTextarea;
     private JTextField visitorMobileInsertTextField;
     private JTextField visitorSearchNameTextField;
     private JTable visitorHistoryRecordTable;
@@ -35,8 +36,9 @@ public class TabbedFrame extends JDialog {
     private JTextField vehicleSearchNoTextField;
     private JTextField vehicleSearchNameTextField;
     private JTextField vehicleSearchMobileNo;
-    private JTextArea vehicleSearchReasonTextArea;
+    private JTextField vehicleSearchReasonTextArea;
     private JButton vehicleSearchButton;
+    private JTextArea visitorReasonInsertTextarea;
 
     public TabbedFrame(JFrame parent) {
         super(parent);
@@ -168,8 +170,47 @@ public class TabbedFrame extends JDialog {
                 System.out.println(error.getMessage());
             }
         });
-
-
+        vehicleSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Database db = new Database();
+                    Connection con = db.con;
+                    Validation validation = new Validation();
+                    String vehicleNo = validation.validateTrim(vehicleSearchNoTextField.getText());
+                    if (vehicleNo.isEmpty()){
+                        JOptionPane.showMessageDialog(TabbedFrame.this,
+                                "Please Enter Vehicle Number to search",
+                                "Vehicle Number Empty",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    Statement statement = con.createStatement();
+                    String query = "SELECT * FROM visitor_records WHERE vehicleNo='"+vehicleNo+"'";
+                    statement.executeQuery(query);
+                    ResultSet resultSet = statement.executeQuery(query);
+                    vehicleSearchReasonTextArea.setText("");
+                    vehicleSearchMobileNo.setText("");
+                    vehicleSearchNameTextField.setText("");
+                    String reason, name, mobileNo;
+                    while (resultSet.next()){
+                        name = resultSet.getString(1);
+                        mobileNo = resultSet.getString(2);
+                        reason = resultSet.getString(4);
+                        vehicleSearchReasonTextArea.setText(reason);
+                        vehicleSearchMobileNo.setText(mobileNo);
+                        vehicleSearchNameTextField.setText(name);
+                    }
+                    statement.close();
+                    con.close();
+                } catch (Exception error){
+                    JOptionPane.showMessageDialog(TabbedFrame.this,
+                            "Please Recheck the vehicle Number no entry found",
+                            "Vehicle Number is invalid",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         setVisible(true);
     }
 
