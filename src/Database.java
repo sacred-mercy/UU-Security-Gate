@@ -16,10 +16,10 @@ public class Database {
         }
     }
 
-    void dataInsert(String query, int noOfValues, String[] values){
+    void dataInsert(String query, String[] values){
         try {
             PreparedStatement statement = con.prepareStatement(query);
-            for (int i=0; i<noOfValues; i++){
+            for (int i = 0; i< 6; i++){
                 statement.setString(i+1,values[i]);
             }
             statement.executeUpdate();
