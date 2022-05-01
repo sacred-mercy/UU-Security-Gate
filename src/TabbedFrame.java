@@ -8,18 +8,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TabbedFrame extends JDialog {
-    private JPanel indexPanel;
-    private JTabbedPane tabbedPane1;
     JTextField empIdInsert;
     JTextField empVehicleInsert;
     JButton insertEmpDataBtn;
+    private JPanel indexPanel;
     private JTextField empDataSearch;
     private JTable empDataSearchTable;
     private JTextField empIdHistorySorting;
     private JTextField empNameHistorySorting;
     private JTable EmpHistoryRecordsTable;
-    private JPanel EmpDataInsert;
-    private JPanel EmpDataSearch;
     private JPanel EmpHistoryRecordSearch;
     private JTextField visitorNameInsertTextField;
     private JTextField visitorVehicleInsertTextField;
@@ -61,12 +58,12 @@ public class TabbedFrame extends JDialog {
                 String date = dateObject.format(now);
                 String time = timeObject.format(now);
                 Statement stmt = con.createStatement();
-                String query = "SELECT * FROM faculty_details WHERE faculty_id='"+id+"'";
+                String query = "SELECT * FROM faculty_details WHERE faculty_id='" + id + "'";
                 ResultSet empDataDb = stmt.executeQuery(query);
-                if (empDataDb.next()){
+                if (empDataDb.next()) {
                     String name = empDataDb.getString(2);
                     String department = empDataDb.getString(3);
-                    query = "INSERT INTO faculty_record VALUES(?,?,?,?,?,?)" ;
+                    query = "INSERT INTO faculty_record VALUES(?,?,?,?,?,?)";
                     String[] empInformation = new String[6];
                     empInformation[0] = id;
                     empInformation[1] = name;
@@ -86,7 +83,7 @@ public class TabbedFrame extends JDialog {
                             "Try Again",
                             JOptionPane.ERROR_MESSAGE);
                 }
-            }catch (Exception error){
+            } catch (Exception error) {
                 System.out.println(error.getMessage());
             }
         });
@@ -99,7 +96,7 @@ public class TabbedFrame extends JDialog {
                 String vehicleNo = validation.validate(visitorVehicleInsertTextField.getText());
                 String mobileNo = validation.validateTrim(visitorMobileInsertTextField.getText());
                 String reason = validation.validateTrim(visitorReasonInsertTextarea.getText());
-                if (name.isEmpty() || mobileNo.isEmpty() || reason.isEmpty()){
+                if (name.isEmpty() || mobileNo.isEmpty() || reason.isEmpty()) {
                     JOptionPane.showMessageDialog(TabbedFrame.this,
                             "Please fill all the required entries",
                             "Blank Entry",
@@ -110,7 +107,7 @@ public class TabbedFrame extends JDialog {
                 LocalDateTime now = LocalDateTime.now();
                 String date = dateObject.format(now);
                 String time = timeObject.format(now);
-                String query = "INSERT INTO visitor_records VALUES(?,?,?,?,?,?)" ;
+                String query = "INSERT INTO visitor_records VALUES(?,?,?,?,?,?)";
                 String[] visitorInformation = new String[6];
                 visitorInformation[0] = name;
                 visitorInformation[1] = mobileNo;
@@ -124,7 +121,7 @@ public class TabbedFrame extends JDialog {
                 visitorMobileInsertTextField.setText("");
                 visitorReasonInsertTextarea.setText("");
                 con.close();
-            }catch (Exception error){
+            } catch (Exception error) {
                 JOptionPane.showMessageDialog(TabbedFrame.this,
                         "Please recheck all the entries",
                         "Invalid Entry",
@@ -138,7 +135,7 @@ public class TabbedFrame extends JDialog {
                 Connection con = db.con;
                 Validation validation = new Validation();
                 String empName = validation.validateTrim(empDataSearch.getText());
-                if (empName.isEmpty()){
+                if (empName.isEmpty()) {
                     JOptionPane.showMessageDialog(TabbedFrame.this,
                             "Please Enter a Employee Name to search",
                             "Employee Name Empty",
@@ -146,7 +143,7 @@ public class TabbedFrame extends JDialog {
                     return;
                 }
                 Statement statement = con.createStatement();
-                String query = "SELECT * FROM faculty_details WHERE faculty_name LIKE '%"+empName+"%'";
+                String query = "SELECT * FROM faculty_details WHERE faculty_name LIKE '%" + empName + "%'";
                 statement.executeQuery(query);
                 ResultSet resultSet = statement.executeQuery(query);
                 empDataSearchTable.setModel(new DefaultTableModel());
@@ -154,7 +151,7 @@ public class TabbedFrame extends JDialog {
                 String[] colName = {"Id", "Name", "Department"};
                 model.setColumnIdentifiers(colName);
                 String id, name, department;
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     id = resultSet.getString(1);
                     name = resultSet.getString(2);
                     department = resultSet.getString(3);
@@ -163,7 +160,7 @@ public class TabbedFrame extends JDialog {
                 }
                 statement.close();
                 con.close();
-            } catch (Exception error){
+            } catch (Exception error) {
                 System.out.println(error.getMessage());
             }
         });
@@ -173,7 +170,7 @@ public class TabbedFrame extends JDialog {
                 Connection con = db.con;
                 Validation validation = new Validation();
                 String vehicleNo = validation.validateTrim(vehicleSearchNoTextField.getText());
-                if (vehicleNo.isEmpty()){
+                if (vehicleNo.isEmpty()) {
                     JOptionPane.showMessageDialog(TabbedFrame.this,
                             "Please Enter Vehicle Number to search",
                             "Vehicle Number Empty",
@@ -181,14 +178,14 @@ public class TabbedFrame extends JDialog {
                     return;
                 }
                 Statement statement = con.createStatement();
-                String query = "SELECT * FROM visitor_records WHERE vehicleNo='"+vehicleNo+"'";
+                String query = "SELECT * FROM visitor_records WHERE vehicleNo='" + vehicleNo + "'";
                 statement.executeQuery(query);
                 ResultSet resultSet = statement.executeQuery(query);
                 vehicleSearchReasonTextArea.setText("");
                 vehicleSearchMobileNo.setText("");
                 vehicleSearchNameTextField.setText("");
                 String reason, name, mobileNo;
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     name = resultSet.getString(1);
                     mobileNo = resultSet.getString(2);
                     reason = resultSet.getString(4);
@@ -198,7 +195,7 @@ public class TabbedFrame extends JDialog {
                 }
                 statement.close();
                 con.close();
-            } catch (Exception error){
+            } catch (Exception error) {
                 JOptionPane.showMessageDialog(TabbedFrame.this,
                         "Please Recheck the vehicle Number no entry found",
                         "Vehicle Number is invalid",
@@ -221,7 +218,7 @@ public class TabbedFrame extends JDialog {
             String[] colName = {"Name", "Mobile Number", "Reason", "Time", "Date", "Vehicle Number"};
             model.setColumnIdentifiers(colName);
             String reason, name, mobileNo, time, date, vehicleNo;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 name = resultSet.getString(1);
                 mobileNo = resultSet.getString(2);
                 vehicleNo = resultSet.getString(3);
@@ -233,7 +230,7 @@ public class TabbedFrame extends JDialog {
             }
             statement.close();
             con.close();
-        } catch (Exception error){
+        } catch (Exception error) {
             System.out.println(error.getMessage());
         }
     }
@@ -251,7 +248,7 @@ public class TabbedFrame extends JDialog {
             String[] colName = {"Id", "Name", "Department", "Time", "Date", "Vehicle Number"};
             model.setColumnIdentifiers(colName);
             String id, name, department, time, date, vehicleNo;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 id = resultSet.getString(1);
                 name = resultSet.getString(2);
                 department = resultSet.getString(3);
@@ -263,7 +260,7 @@ public class TabbedFrame extends JDialog {
             }
             statement.close();
             con.close();
-        } catch (Exception error){
+        } catch (Exception error) {
             System.out.println(error.getMessage());
         }
     }
@@ -281,7 +278,7 @@ public class TabbedFrame extends JDialog {
             String[] colName = {"Id", "Name", "Department"};
             model.setColumnIdentifiers(colName);
             String id, name, department;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 id = resultSet.getString(1);
                 name = resultSet.getString(2);
                 department = resultSet.getString(3);
@@ -290,7 +287,7 @@ public class TabbedFrame extends JDialog {
             }
             statement.close();
             con.close();
-        } catch (Exception error){
+        } catch (Exception error) {
             System.out.println(error.getMessage());
         }
     }

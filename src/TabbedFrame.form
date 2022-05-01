@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <tabbedpane id="f230c" binding="tabbedPane1">
+      <tabbedpane id="f230c">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="200"/>
@@ -41,7 +41,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <grid id="abf9e" binding="EmpDataInsert" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="abf9e" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="2" left="2" bottom="2" right="2"/>
                     <constraints>
                       <splitpane position="left"/>
@@ -119,7 +119,7 @@
                       </vspacer>
                     </children>
                   </grid>
-                  <grid id="c2914" binding="EmpDataSearch" layout-manager="GridLayoutManager" row-count="2" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="c2914" layout-manager="GridLayoutManager" row-count="2" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="2" left="2" bottom="2" right="2"/>
                     <constraints>
                       <splitpane position="right"/>

@@ -1,4 +1,5 @@
 import com.mysql.jdbc.Connection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ public class Login extends JDialog {
                 Connection con = db.con;
                 Validation validation = new Validation();
                 String username = validation.validateUsername(textFieldUsername.getText());
-                if (username.isEmpty()){
+                if (username.isEmpty()) {
                     JOptionPane.showMessageDialog(Login.this,
                             "Please Enter an username",
                             "Username Empty",
@@ -33,7 +34,7 @@ public class Login extends JDialog {
                     return;
                 }
                 String password = validation.validatePassword(String.valueOf(textFieldPassword.getPassword()));
-                if (password.isEmpty()){
+                if (password.isEmpty()) {
                     JOptionPane.showMessageDialog(Login.this,
                             "Please Enter a password",
                             "Password Empty",

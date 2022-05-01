@@ -11,19 +11,19 @@ public class Database {
             final String dbUsername = "root";
             final String dbPassword = "";
             con = (com.mysql.jdbc.Connection) DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-        } catch (Exception error){
+        } catch (Exception error) {
             System.out.println(error.getMessage());
         }
     }
 
-    void dataInsert(String query, String[] values){
+    void dataInsert(String query, String[] values) {
         try {
             PreparedStatement statement = con.prepareStatement(query);
-            for (int i = 0; i< 6; i++){
-                statement.setString(i+1,values[i]);
+            for (int i = 0; i < 6; i++) {
+                statement.setString(i + 1, values[i]);
             }
             statement.executeUpdate();
-        } catch (Exception error){
+        } catch (Exception error) {
             System.out.println(error.getMessage());
         }
 
