@@ -1,4 +1,5 @@
 import com.mysql.jdbc.Connection;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TabbedFrame extends JDialog {
+    //Swing components in GUI
     JTextField empIdInsert;
     JTextField empVehicleInsert;
     JButton insertEmpDataBtn;
@@ -15,26 +17,24 @@ public class TabbedFrame extends JDialog {
     private JTextField empDataSearch;
     private JTable empDataSearchTable;
     private JTextField empIdHistorySorting;
-    private JTextField empNameHistorySorting;
     private JTable EmpHistoryRecordsTable;
-    private JPanel EmpHistoryRecordSearch;
     private JTextField visitorNameInsertTextField;
     private JTextField visitorVehicleInsertTextField;
     private JTextField visitorMobileInsertTextField;
     private JTextField visitorSearchNameTextField;
     private JTable visitorHistoryRecordTable;
     private JButton InsertVisitorDataBtn;
-    private JTable completeHistoryTable;
     private JButton empDataSearchButton;
-    private JButton clearButton;
-    private JTextField vehicleSearchNoTextField;
-    private JTextField vehicleSearchNameTextField;
-    private JTextField vehicleSearchMobileNo;
-    private JTextField vehicleSearchReasonTextArea;
-    private JButton vehicleSearchButton;
-    private JTextArea visitorReasonInsertTextarea;
+    private JButton empDataClearButton;
+    private JTextField visitorReasonInsertTextField;
+    private JButton empHistorySortingButton;
+    private JButton empHistorySortingClearButton;
+    private JButton insertEmpDataClearButton;
+    private JButton visitorRecordSearchButton;
+    private JButton visitorRecordClearButton;
 
     public TabbedFrame(JFrame parent) {
+        //Creating a view
         super(parent);
         setTitle("Employee Entry");
         setContentPane(indexPanel);
@@ -45,6 +45,7 @@ public class TabbedFrame extends JDialog {
         showEmpHistoryRecordTableData();
         showVisitorHistoryRecordTableData();
 
+        //Button to insert Employee Entry Data into Database
         insertEmpDataBtn.addActionListener(e -> {
             try {
                 Database db = new Database();
@@ -87,6 +88,8 @@ public class TabbedFrame extends JDialog {
                 System.out.println(error.getMessage());
             }
         });
+
+        //Button to insert Visitor Entry Data into Database
         InsertVisitorDataBtn.addActionListener(e -> {
             try {
                 Database db = new Database();
@@ -95,7 +98,7 @@ public class TabbedFrame extends JDialog {
                 String name = validation.validateTrim(visitorNameInsertTextField.getText());
                 String vehicleNo = validation.validate(visitorVehicleInsertTextField.getText());
                 String mobileNo = validation.validateTrim(visitorMobileInsertTextField.getText());
-                String reason = validation.validateTrim(visitorReasonInsertTextarea.getText());
+                String reason = validation.validateTrim(visitorReasonInsertTextField.getText());
                 if (name.isEmpty() || mobileNo.isEmpty() || reason.isEmpty()) {
                     JOptionPane.showMessageDialog(TabbedFrame.this,
                             "Please fill all the required entries",
@@ -119,7 +122,7 @@ public class TabbedFrame extends JDialog {
                 visitorNameInsertTextField.setText("");
                 visitorVehicleInsertTextField.setText("");
                 visitorMobileInsertTextField.setText("");
-                visitorReasonInsertTextarea.setText("");
+                visitorReasonInsertTextField.setText("");
                 con.close();
             } catch (Exception error) {
                 JOptionPane.showMessageDialog(TabbedFrame.this,
@@ -129,6 +132,8 @@ public class TabbedFrame extends JDialog {
             }
             showVisitorHistoryRecordTableData();
         });
+
+        //Button to Fetch Searched employee data from Database
         empDataSearchButton.addActionListener(e -> {
             try {
                 Database db = new Database();
@@ -164,47 +169,114 @@ public class TabbedFrame extends JDialog {
                 System.out.println(error.getMessage());
             }
         });
-        vehicleSearchButton.addActionListener(e -> {
+
+        // Button to clear Searched data from Table in which employee data is displayed
+        empDataClearButton.addActionListener(e -> {
+            showEmpDataTableData();
+            empDataSearch.setText("");
+        });
+
+        // Button to clear Searched data from Table in which employee's records are displayed
+        empHistorySortingClearButton.addActionListener(e -> {
+            showEmpHistoryRecordTableData();
+            empIdHistorySorting.setText("");
+        });
+
+        // Button to search employee Records with name or ID
+        empHistorySortingButton.addActionListener(e -> {
             try {
                 Database db = new Database();
                 Connection con = db.con;
                 Validation validation = new Validation();
-                String vehicleNo = validation.validateTrim(vehicleSearchNoTextField.getText());
-                if (vehicleNo.isEmpty()) {
+                String emp = validation.validateTrim(empIdHistorySorting.getText());
+                if (emp.isEmpty()) {
                     JOptionPane.showMessageDialog(TabbedFrame.this,
-                            "Please Enter Vehicle Number to search",
-                            "Vehicle Number Empty",
+                            "Please Enter an Employee Name or ID to search",
+                            "Employee Name/Id Empty",
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 Statement statement = con.createStatement();
-                String query = "SELECT * FROM visitor_records WHERE vehicleNo='" + vehicleNo + "'";
+                String query = "SELECT * FROM faculty_record WHERE name LIKE '%" + emp + "%' OR id LIKE '%" + emp + "%' ORDER BY date DESC, time DESC";
                 statement.executeQuery(query);
                 ResultSet resultSet = statement.executeQuery(query);
-                vehicleSearchReasonTextArea.setText("");
-                vehicleSearchMobileNo.setText("");
-                vehicleSearchNameTextField.setText("");
-                String reason, name, mobileNo;
+                EmpHistoryRecordsTable.setModel(new DefaultTableModel());
+                DefaultTableModel model = (DefaultTableModel) EmpHistoryRecordsTable.getModel();
+                String[] colName = {"Id", "Name", "Department", "Time", "Date", "Vehicle Number"};
+                model.setColumnIdentifiers(colName);
+                String id, name, department, time, date, vehicleNo;
                 while (resultSet.next()) {
-                    name = resultSet.getString(1);
-                    mobileNo = resultSet.getString(2);
-                    reason = resultSet.getString(4);
-                    vehicleSearchReasonTextArea.setText(reason);
-                    vehicleSearchMobileNo.setText(mobileNo);
-                    vehicleSearchNameTextField.setText(name);
+                    id = resultSet.getString(1);
+                    name = resultSet.getString(2);
+                    department = resultSet.getString(3);
+                    time = resultSet.getString(4);
+                    date = resultSet.getString(5);
+                    vehicleNo = resultSet.getString(6);
+                    String[] row = {id, name, department, time, date, vehicleNo};
+                    model.addRow(row);
                 }
                 statement.close();
                 con.close();
             } catch (Exception error) {
-                JOptionPane.showMessageDialog(TabbedFrame.this,
-                        "Please Recheck the vehicle Number no entry found",
-                        "Vehicle Number is invalid",
-                        JOptionPane.ERROR_MESSAGE);
+                System.out.println(error.getMessage());
             }
+        });
+
+        // Button to clear inserted text of employee entry inserting textField
+        insertEmpDataClearButton.addActionListener(e -> {
+            empIdInsert.setText("");
+            empVehicleInsert.setText("");
+        });
+
+        // Search visitor by name or vehicle in table
+        visitorRecordSearchButton.addActionListener(e -> {
+            try {
+                Database db = new Database();
+                Connection con = db.con;
+                Validation validation = new Validation();
+                String visitor = validation.validateTrim(visitorSearchNameTextField.getText());
+                if (visitor.isEmpty()) {
+                    JOptionPane.showMessageDialog(TabbedFrame.this,
+                            "Please Enter visitor Name or Vehicle Number to search",
+                            "Visitor Name/Vehicle No. Empty",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Statement statement = con.createStatement();
+                String query = "SELECT * FROM visitor_records WHERE name LIKE '%" + visitor + "%' OR vehicleNo LIKE '%" + visitor + "%' ORDER BY date DESC, time DESC";
+                statement.executeQuery(query);
+                ResultSet resultSet = statement.executeQuery(query);
+                visitorHistoryRecordTable.setModel(new DefaultTableModel());
+                DefaultTableModel model = (DefaultTableModel) visitorHistoryRecordTable.getModel();
+                String[] colName = {"Name", "Mobile Number", "Reason", "Time", "Date", "Vehicle Number"};
+                model.setColumnIdentifiers(colName);
+                String reason, name, mobileNo, time, date, vehicleNo;
+                while (resultSet.next()) {
+                    name = resultSet.getString(1);
+                    mobileNo = resultSet.getString(2);
+                    vehicleNo = resultSet.getString(3);
+                    reason = resultSet.getString(4);
+                    time = resultSet.getString(5);
+                    date = resultSet.getString(6);
+                    String[] row = {name, mobileNo, reason, time, date, vehicleNo};
+                    model.addRow(row);
+                }
+                statement.close();
+                con.close();
+            } catch (Exception error) {
+                System.out.println(error.getMessage());
+            }
+        });
+
+        // Button to clear searched data in visitor record table
+        visitorRecordClearButton.addActionListener(e -> {
+            showVisitorHistoryRecordTableData();
+            visitorSearchNameTextField.setText("");
         });
         setVisible(true);
     }
 
+    //function to display visitor entry record in Table
     public void showVisitorHistoryRecordTableData() {
         try {
             Database db = new Database();
@@ -235,6 +307,7 @@ public class TabbedFrame extends JDialog {
         }
     }
 
+    //function to display employee entry record in Table
     public void showEmpHistoryRecordTableData() {
         try {
             Database db = new Database();
@@ -265,6 +338,7 @@ public class TabbedFrame extends JDialog {
         }
     }
 
+    //function to display Employee Search Data in Table
     private void showEmpDataTableData() {
         try {
             Database db = new Database();
