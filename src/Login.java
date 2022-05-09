@@ -19,6 +19,7 @@ public class Login extends JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        getRootPane().setDefaultButton(loginBtn);
 
         loginBtn.addActionListener(e -> {
             try {
@@ -46,8 +47,10 @@ public class Login extends JDialog {
                 ResultSet resultSet = stmt.executeQuery(query);
                 if (resultSet.next()) {
                     dispose();
-                    TabbedFrame index = new TabbedFrame(null);
+                    LoadingScreen index = new LoadingScreen(null);
                     index.getAccessibleContext();
+                    Thread thread = new Thread(index);
+                    thread.start();
                 } else {
                     JOptionPane.showMessageDialog(Login.this,
                             "username and password are invalid",

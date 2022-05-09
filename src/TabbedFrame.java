@@ -3,6 +3,8 @@ import com.mysql.jdbc.Connection;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
@@ -36,7 +38,7 @@ public class TabbedFrame extends JDialog {
     public TabbedFrame(JFrame parent) {
         //Creating a view
         super(parent);
-        setTitle("Employee Entry");
+        setTitle("UU Gate Entry Manager");
         setContentPane(indexPanel);
         setMinimumSize(new Dimension(1400, 800));
         setLocationRelativeTo(parent);
@@ -272,6 +274,42 @@ public class TabbedFrame extends JDialog {
         visitorRecordClearButton.addActionListener(e -> {
             showVisitorHistoryRecordTableData();
             visitorSearchNameTextField.setText("");
+        });
+        empIdInsert.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(insertEmpDataBtn);
+            }
+        });
+        empVehicleInsert.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(insertEmpDataBtn);
+            }
+        });
+        visitorReasonInsertTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(InsertVisitorDataBtn);
+            }
+        });
+        empDataSearch.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(empDataSearchButton);
+            }
+        });
+        empIdHistorySorting.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(empHistorySortingButton);
+            }
+        });
+        visitorSearchNameTextField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(visitorRecordSearchButton);
+            }
         });
         setVisible(true);
     }
