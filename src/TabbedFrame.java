@@ -2,9 +2,13 @@ import com.mysql.jdbc.Connection;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
@@ -34,6 +38,8 @@ public class TabbedFrame extends JDialog {
     private JButton insertEmpDataClearButton;
     private JButton visitorRecordSearchButton;
     private JButton visitorRecordClearButton;
+    private JButton empExportCSVBtn;
+    private JButton visitorExportToCSVButton;
 
     public TabbedFrame(JFrame parent) {
         //Creating a view
@@ -275,6 +281,8 @@ public class TabbedFrame extends JDialog {
             showVisitorHistoryRecordTableData();
             visitorSearchNameTextField.setText("");
         });
+
+        // to add focus for text field to enter key
         empIdInsert.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -311,6 +319,48 @@ public class TabbedFrame extends JDialog {
                 getRootPane().setDefaultButton(visitorRecordSearchButton);
             }
         });
+
+        // Button to export data from table to excel document
+        empExportCSVBtn.addActionListener(e -> {
+            JFileChooser fc = new JFileChooser();
+            int option = fc.showSaveDialog(TabbedFrame.this);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                String filename = fc.getSelectedFile().getName();
+                String path = fc.getSelectedFile().getParentFile().getPath();
+                int len = filename.length();
+                String ext = "";
+                String file;
+                if (len > 4) {
+                    ext = filename.substring(len - 4, len);
+                }
+                if (ext.equals(".xls")) {
+                    file = path + "\\" + filename;
+                } else {
+                    file = path + "\\" + filename + ".xls";
+                }
+                toExcel(EmpHistoryRecordsTable, new File(file));
+            }
+        });
+        visitorExportToCSVButton.addActionListener(e -> {
+            JFileChooser fc = new JFileChooser();
+            int option = fc.showSaveDialog(TabbedFrame.this);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                String filename = fc.getSelectedFile().getName();
+                String path = fc.getSelectedFile().getParentFile().getPath();
+                int len = filename.length();
+                String ext = "";
+                String file;
+                if (len > 4) {
+                    ext = filename.substring(len - 4, len);
+                }
+                if (ext.equals(".xls")) {
+                    file = path + "\\" + filename;
+                } else {
+                    file = path + "\\" + filename + ".xls";
+                }
+                toExcel(visitorHistoryRecordTable, new File(file));
+            }
+        });
         setVisible(true);
     }
 
@@ -320,7 +370,7 @@ public class TabbedFrame extends JDialog {
             Database db = new Database();
             Connection con = db.con;
             Statement statement = con.createStatement();
-            String query = "SELECT * FROM visitor_records ORDER BY date DESC, time DESC";
+            String query = "SELECT * FROM visitor_records ORDER BY date DESC, time DESC LIMIT 501";
             statement.executeQuery(query);
             ResultSet resultSet = statement.executeQuery(query);
             visitorHistoryRecordTable.setModel(new DefaultTableModel());
@@ -351,7 +401,7 @@ public class TabbedFrame extends JDialog {
             Database db = new Database();
             Connection con = db.con;
             Statement statement = con.createStatement();
-            String query = "SELECT * FROM faculty_record ORDER BY date DESC, time DESC";
+            String query = "SELECT * FROM faculty_record ORDER BY date DESC, time DESC LIMIT 501";
             statement.executeQuery(query);
             ResultSet resultSet = statement.executeQuery(query);
             EmpHistoryRecordsTable.setModel(new DefaultTableModel());
@@ -401,6 +451,27 @@ public class TabbedFrame extends JDialog {
             con.close();
         } catch (Exception error) {
             System.out.println(error.getMessage());
+        }
+    }
+
+    // function to convert JTable to Excel document
+    public void toExcel(JTable table, File file) {
+        try {
+            TableModel model = table.getModel();
+            FileWriter excel = new FileWriter(file);
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                excel.write(model.getColumnName(i) + "\t");
+            }
+            excel.write("\n");
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    excel.write(model.getValueAt(i, j).toString() + "\t");
+                }
+                excel.write("\n");
+            }
+            excel.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
