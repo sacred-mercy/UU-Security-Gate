@@ -49,9 +49,7 @@ public class TabbedFrame extends JDialog {
         setMinimumSize(new Dimension(1400, 800));
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        showEmpDataTableData();
-        showEmpHistoryRecordTableData();
-        showVisitorHistoryRecordTableData();
+
 
         //Button to insert Employee Entry Data into Database
         insertEmpDataBtn.addActionListener(e -> {
@@ -362,6 +360,9 @@ public class TabbedFrame extends JDialog {
             }
         });
         setVisible(true);
+        showEmpDataTableData();
+        showEmpHistoryRecordTableData();
+        showVisitorHistoryRecordTableData();
     }
 
     //function to display visitor entry record in Table
