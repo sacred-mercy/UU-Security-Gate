@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="UU Security Gate Swing:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/UU_Security_Gate_Swing_jar</output-path>
+    <root id="archive" name="UU Security Gate Swing.jar">
+      <element id="module-output" name="UU Security Gate Swing" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jar/mysql-connector.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

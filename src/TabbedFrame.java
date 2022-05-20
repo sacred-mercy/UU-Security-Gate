@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.File;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 public class TabbedFrame extends JDialog {
     //Swing components in GUI
+
     JTextField empIdInsert;
     JTextField empVehicleInsert;
     JButton insertEmpDataBtn;
@@ -40,6 +42,8 @@ public class TabbedFrame extends JDialog {
     private JButton visitorRecordClearButton;
     private JButton empExportCSVBtn;
     private JButton visitorExportToCSVButton;
+    private JPanel Employee;
+    private JPanel Visitor;
 
     public TabbedFrame(JFrame parent) {
         //Creating a view
@@ -49,6 +53,7 @@ public class TabbedFrame extends JDialog {
         setMinimumSize(new Dimension(1400, 800));
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        requestFocusInWindow();
 
 
         //Button to insert Employee Entry Data into Database
@@ -90,6 +95,7 @@ public class TabbedFrame extends JDialog {
                             "Try Again",
                             JOptionPane.ERROR_MESSAGE);
                 }
+                empIdInsert.requestFocusInWindow();
             } catch (Exception error) {
                 System.out.println(error.getMessage());
             }
@@ -137,6 +143,7 @@ public class TabbedFrame extends JDialog {
                         JOptionPane.ERROR_MESSAGE);
             }
             showVisitorHistoryRecordTableData();
+            visitorNameInsertTextField.requestFocusInWindow();
         });
 
         //Button to Fetch Searched employee data from Database
@@ -359,7 +366,10 @@ public class TabbedFrame extends JDialog {
                 toExcel(visitorHistoryRecordTable, new File(file));
             }
         });
-        setVisible(true);
+
+//        setVisible(true);
+
+        // functions call for all the tables used
         showEmpDataTableData();
         showEmpHistoryRecordTableData();
         showVisitorHistoryRecordTableData();

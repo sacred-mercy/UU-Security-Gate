@@ -13,23 +13,32 @@ public class LoadingScreen extends JDialog implements Runnable {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         progressBar1.setValue(0);
-        progressBar1.setStringPainted(true);
+//        progressBar1.setStringPainted(true);
         setVisible(true);
     }
     public void iterate(){
-        int i = 0;
+        int i = 35;
         while(i<=100){
             progressBar1.setValue(i);
             i++;
-            try{Thread.sleep(10);}catch(Exception e){}
+            try{Thread.sleep(3);}catch(Exception e){}
         }
     }
 
     @Override
     public void run() {
-        iterate();
+        progressBar1.setValue(5);
+        progressBar1.setValue(10);
+        try{Thread.sleep(20);}catch(Exception e){}
+        progressBar1.setValue(20);
+        progressBar1.setValue(25);
+        try{Thread.sleep(20);}catch(Exception e){}
+        progressBar1.setValue(30);
+        progressBar1.setValue(35);
         TabbedFrame index = new TabbedFrame(null);
+        iterate();
         index.getAccessibleContext();
+        index.setVisible(true);
 
         for (int i = 0; i<=2; i++) {
             if (i == 2) {
