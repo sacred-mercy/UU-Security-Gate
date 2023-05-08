@@ -1,3 +1,8 @@
+**_How to run_**
+1. Install Intellij IDEA
+2. Import the database file in MySQL
+3. Run MainApplication.java file in Intellij IDEA
+
 **_Login Screen_**
 
 ![image](https://user-images.githubusercontent.com/71167081/169533413-60d6e995-021e-4f70-b97b-acab5ce0ca62.png)
